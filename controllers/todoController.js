@@ -1,45 +1,56 @@
-const fs = require('fs');
-const path = require('path');
-const todosPath = path.join(__dirname, '../data/todos.json');
+const todoModel = require('../models/todoModel');
 
 const fetchTodos = (req, res) => {
-    const todos = JSON.parse(fs.readFileSync(todosPath, 'utf-8'));
-    // Implement optional search and filters here
-    res.json(todos);
+    try {
+        const filters = req.query;
+        const todos = todoModel.getTodos(filters);
+        res.json(todos);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to fetch todos' });
+    }
 };
 
 const addTodo = (req, res) => {
-    const todos = JSON.parse(fs.readFileSync(todosPath, 'utf-8'));
-    const newTodo = {
-        id: Date.now().toString(),
-        ...req.body,
-        done: false,
-        lastUpdated: new Date()
-    };
-    todos.push(newTodo);
-    fs.writeFileSync(todosPath, JSON.stringify(todos));
-    res.status(201).json(newTodo);
+    try {
+        const newTodo = {
+            id: Date.now().toString(),
+            ...req.body,
+            done: false,
+            lastUpdated: new Date().toISOString()
+        };
+        todoModel.addTodo(newTodo);
+        res.status(201).json(newTodo);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to add todo' });
+    }
 };
 
 const updateTodo = (req, res) => {
-    let todos = JSON.parse(fs.readFileSync(todosPath, 'utf-8'));
-    todos = todos.map(todo => todo.id === req.params.id ? { ...todo, ...req.body, lastUpdated: new Date() } : todo);
-    fs.writeFileSync(todosPath, JSON.stringify(todos));
-    res.json(todos.find(todo => todo.id === req.params.id));
+    try {
+        const updatedFields = req.body;
+        const updatedTodo = todoModel.updateTodo(req.params.id, updatedFields);
+        res.json(updatedTodo);
+    } catch (error) {
+        res.status(404).json({ error: 'Todo not found' });
+    }
 };
 
 const deleteTodo = (req, res) => {
-    let todos = JSON.parse(fs.readFileSync(todosPath, 'utf-8'));
-    todos = todos.filter(todo => todo.id !== req.params.id);
-    fs.writeFileSync(todosPath, JSON.stringify(todos));
-    res.status(204).end();
+    try {
+        todoModel.deleteTodo(req.params.id);
+        res.status(204).end();
+    } catch (error) {
+        res.status(404).json({ error: 'Todo not found' });
+    }
 };
 
 const markAsDone = (req, res) => {
-    let todos = JSON.parse(fs.readFileSync(todosPath, 'utf-8'));
-    todos = todos.map(todo => todo.id === req.params.id ? { ...todo, done: true, lastUpdated: new Date() } : todo);
-    fs.writeFileSync(todosPath, JSON.stringify(todos));
-    res.json(todos.find(todo => todo.id === req.params.id));
+    try {
+        const updatedTodo = todoModel.updateTodo(req.params.id, { done: true });
+        res.json(updatedTodo);
+    } catch (error) {
+        res.status(404).json({ error: 'Todo not found' });
+    }
 };
 
 module.exports = {
