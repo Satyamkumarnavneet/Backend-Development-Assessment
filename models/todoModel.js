@@ -25,10 +25,9 @@ const writeTodos = (todos) => {
 const getTodos = (filters = {}) => {
     const todos = readTodos();
     return todos.filter(todo => {
-        // Apply filters if any
         return (!filters.title || todo.title.includes(filters.title)) &&
                (!filters.description || todo.description.includes(filters.description)) &&
-               (filters.done === undefined || todo.done === filters.done);
+               (filters.done === undefined || todo.done === (filters.done === 'true'));
     });
 };
 
@@ -44,11 +43,14 @@ const updateTodo = (id, updatedFields) => {
     if (index === -1) throw new Error('Todo not found');
     todos[index] = { ...todos[index], ...updatedFields, lastUpdated: new Date().toISOString() };
     writeTodos(todos);
+    return todos[index];
 };
 
 const deleteTodo = (id) => {
     let todos = readTodos();
-    todos = todos.filter(todo => todo.id !== id);
+    const index = todos.findIndex(todo => todo.id === id);
+    if (index === -1) throw new Error('Todo not found');
+    todos.splice(index, 1);
     writeTodos(todos);
 };
 
