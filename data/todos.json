@@ -19,5 +19,12 @@
     "description": "Class, Function, For each loop, Oops, Exception handling, JSP, Servlets, JPA",
     "done": true,
     "lastUpdated": "2024-07-29T14:44:57.177Z"
+  },
+  {
+    "id": "1722278618375",
+    "title": "Learn Java with Spring Boot",
+    "description": "JDBC, JPA, JSP, Servlets, Bean, For each loop, Oops, Exception handling",
+    "done": false,
+    "lastUpdated": "2024-07-29T18:45:28.504Z"
   }
 ]
