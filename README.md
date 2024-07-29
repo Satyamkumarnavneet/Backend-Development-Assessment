@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a simple Todo List application built using Node.js, Express.js, and JSON file storage. The application allows users to manage their todo items through a set of API endpoints. It supports operations such as fetching todos, adding new todos, updating existing todos, deleting todos, and marking todos as completed.
+This is a Todo List application built using Node.js, Express.js, and JSON file storage. The application allows users to manage their todo items through a set of API endpoints. It supports operations such as fetching todos, adding new todos, updating existing todos, deleting todos, and marking todos as completed.
 
 ## System Design
 
