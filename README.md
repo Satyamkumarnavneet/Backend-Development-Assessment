@@ -27,3 +27,82 @@ The application is designed with modularity and scalability in mind, following t
 - `app.js` - Main application entry point.
 - `package.json` - Contains project metadata and dependencies.
 - `README.md` - Documentation for the project.
+
+### API Endpoints
+
+- `GET /todos`: Retrieve the list of todos with optional search and filters.
+- `POST /todos`: Add a new todo item to the list.
+- `PUT /todos/:id`: Update an existing todo item.
+- `DELETE /todos/:id`: Remove a todo item from the list.
+- `PATCH /todos/:id/markAsDone`: Mark a todo item as completed.
+
+### Error Handling
+
+- Default 404 error handling for unknown routes.
+- Default 500 error handling for server errors.
+
+### Future Enhancements
+
+- Use a database like MongoDB, PostgreSQL, or MySQL for data storage.
+- Implement caching strategies using Redis or in-memory caches.
+- Add unit tests for controllers and models.
+- Implement logging using libraries like `winston`.
+
+## Setup and Run
+
+### Prerequisites
+
+- Node.js installed on your system.
+- npm (Node Package Manager) installed.
+
+### Steps to Set Up and Run the Application
+
+1. **Clone the Repository**
+
+    ```bash
+    git clone https://github.com/Satyamkumarnavneet/Todo-List-App-API
+    cd Todo-List-App-API
+    ```
+
+2. **Install Dependencies**
+
+    ```bash
+    npm install
+    ```
+
+3. **Run the Application**
+
+    ```bash
+    npm start
+    ```
+
+    The server will start running on `http://localhost:3000`.
+
+4. **Test the API Endpoints**
+
+    Use Postman or any other API client to test the API endpoints. Here are some example requests:
+
+    - **Fetch Todos**
+        - URL: `GET http://localhost:3000/todos`
+    - **Add Todo**
+        - URL: `POST http://localhost:3000/todos`
+        - Body: `{
+            "title": "New Todo",
+            "description": "Description of the new todo"
+          }`
+    - **Update Todo**
+        - URL: `PUT http://localhost:3000/todos/:id`
+        - Body: `{
+            "title": "Updated Title",
+            "description": "Updated description"
+          }`
+    - **Delete Todo**
+        - URL: `DELETE http://localhost:3000/todos/:id`
+    - **Mark As Done**
+        - URL: `PATCH http://localhost:3000/todos/:id/markAsDone`
+
+For detailed API documentation and to see the API in action, visit the [Postman Documentation](https://documenter.getpostman.com/view/16476251/2sA3kaDznq).
+
+## Conclusion
+
+This Todo List application serves as a basic example of how to build a RESTful API with Node.js and Express.js. It is designed to be easily extendable and scalable for future enhancements.
